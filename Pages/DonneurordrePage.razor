@@ -1,0 +1,121 @@
+﻿@page "/client"
+@using CautionSououmission.Shared;
+@using System
+@using System.Linq
+@using MudBlazor
+@inject ISnackbar Snackbar
+
+
+
+<MudCard Elevation="25">
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6">CLient</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <EditForm OnInvalidSubmit="Add" Model="@donneurordre">
+            <MudTextField @bind-Value="donneurordre.raison_sociale" Label="Nom client" Variant="Variant.Text"></MudTextField>
+            <MudTextField @bind-Value="donneurordre.num_registre_commerce" Label="Numero RC" Variant="Variant.Text"></MudTextField>
+            <MudTextField @bind-Value="donneurordre.bp" Label="Boite postale" Variant="Variant.Text"></MudTextField>
+            <MudTextField @bind-Value="donneurordre.telephone1" Label="Telephone 1" Variant="Variant.Text"></MudTextField>
+            <MudTextField @bind-Value="donneurordre.telephone2" Label="Telephone 2" Variant="Variant.Text"></MudTextField>
+            <br /><br />
+            <MudButton Color="Color.Info" Variant="Variant.Filled" OnClick="Add">Enregistrer</MudButton>
+        </EditForm>
+    </MudCardContent>
+</MudCard>
+
+<br />
+<br />
+<MudTable Elevation="10" Items="GetAll()" Filter="new Func<Donneurordre, bool>(Rechercher)" @bind-benecifiaire="donneurordre">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Liste Client</MudText>
+        <MudSpacer></MudSpacer>
+        <MudTextField @bind-Value="searchString" Placeholder="Recherche client"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Raison sociale</MudTh>
+        <MudTh>Numme RC</MudTh>
+        <MudTh>Boite Postale</MudTh>
+        <MudTh>Telephone 1</MudTh>
+        <MudTh>Telephone 2</MudTh>
+        <MudTh>Action</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+            <MudTd DataLabel="Raison sociale">@context.raison_sociale</MudTd>
+            <MudTd DataLabel="Numero RC">@context.num_registre_commerce</MudTd>
+            <MudTd DataLabel="Boite Postale">@context.bp</MudTd>
+            <MudTd DataLabel="Telephone 1">@context.telephone1</MudTd>
+            <MudTd DataLabel="Telephone 2">@context.telephone2</MudTd>
+            <MudTd DataLabel="Action">
+                <MudFab OnClick="@(()=>Update(context))" Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" IconSize="Size.Small"></MudFab>
+                <MudFab OnClick="@(()=>Delete(context))" Color="Color.Secondary" Icon="@Icons.Material.Filled.Delete" Size="Size.Small" IconSize="Size.Small"></MudFab>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+    </MudTable>
+
+
+
+@code {
+    private string searchString = "";
+    private Donneurordre donneurordre = new Donneurordre();
+
+    private List<Donneurordre> donneurordres = new List<Donneurordre>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        donneurordres = donneurordreService.GetAll();
+    }
+
+    public bool Rechercher(Donneurordre donneurordre)
+    {
+        if (string.IsNullOrWhiteSpace(searchString)) return true;
+        if (donneurordre.raison_sociale.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+        {
+            return false;
+        }
+    }
+
+    private List<Donneurordre> GetAll()
+    {
+        donneurordres = donneurordreService.GetAll();
+        return donneurordres;
+    }
+
+    private void Add()
+    {
+        if (donneurordre.id_client == 0)
+        {
+            var saved = donneurordreService.Add(donneurordre);
+            Snackbar.Add("Client Ajouté", Severity.Success);
+
+        }
+        else
+        {
+            donneurordreService.Update(donneurordre);
+            Snackbar.Add("Client mis à jour", Severity.Success);
+        }
+        donneurordre = new Donneurordre();
+        GetAll();
+    }
+
+    private void Update(Donneurordre record)
+    {
+        donneurordre = record;
+        StateHasChanged();
+    }
+
+    private async Task Delete(Donneurordre record)
+    {
+        donneurordreService.Delete(record);
+        GetAll();
+    }
+
+}

@@ -1,0 +1,114 @@
+﻿@page "/beneficiaire"
+@using CautionSououmission.Shared;
+@using System
+@using System.Linq
+@using MudBlazor
+@inject ISnackbar Snackbar
+
+
+
+<MudCard Elevation="25">
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6">Beneficiaire</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <EditForm OnInvalidSubmit="Add" Model="@beneficiaire">
+            <MudTextField @bind-Value="beneficiaire.designation_beneficiaire" Label="Le Beneficiaire" Variant="Variant.Text"></MudTextField>
+            <MudTextField @bind-Value="beneficiaire.libelle_projet" Label="Libelle du projet" Variant="Variant.Text"></MudTextField>
+            <MudTextField @bind-Value="beneficiaire.telephone1" Label="Telephone 1" Variant="Variant.Text"></MudTextField>
+            <MudTextField @bind-Value="beneficiaire.telephone2" Label="Telephone 2" Variant="Variant.Text"></MudTextField>
+            <br /><br />
+            <MudButton Color="Color.Info" Variant="Variant.Filled" OnClick="Add">Enregistrer</MudButton>
+        </EditForm>
+    </MudCardContent>
+</MudCard>
+
+<br />
+<br />
+<MudTable Elevation="5" Items="GetAll()" Filter="new Func<Beneficiaire, bool>(Rechercher)" @bind-benecifiaire="beneficiaire">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Liste Beneficiaire</MudText>
+        <MudSpacer></MudSpacer>
+        <MudTextField @bind-Value="searchString" Placeholder="Recherche beneficiaire"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Beneficiaire</MudTh>
+        <MudTh>Projet</MudTh>
+        <MudTh>Telephone 1</MudTh>
+        <MudTh>Telephone 2</MudTh>
+        <MudTh>Action</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Beneficiaire">@context.designation_beneficiaire</MudTd>
+            <MudTd DataLabel="Projet">@context.libelle_projet</MudTd>
+            <MudTd DataLabel="Telephone 1">@context.telephone1</MudTd>
+            <MudTd DataLabel="Telephone 2">@context.telephone2</MudTd>
+        <MudTd DataLabel="Action">
+            <MudFab OnClick="@(()=>Update(context))" Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" IconSize="Size.Small"></MudFab>
+            <MudFab OnClick="@(()=>Delete(context))" Color="Color.Secondary" Icon="@Icons.Material.Filled.Delete" Size="Size.Small" IconSize="Size.Small"></MudFab>
+        </MudTd>
+    </RowTemplate>
+        <PagerContent>
+            <MudTablePager  />
+        </PagerContent>
+</MudTable>
+@code {
+    private string searchString = "";
+    private Beneficiaire beneficiaire = new Beneficiaire();
+
+    private List<Beneficiaire> beneficiaires = new List<Beneficiaire>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        beneficiaires = beneficiaireService.GetAll();
+    }
+
+    public bool Rechercher(Beneficiaire beneficiaire)
+    {
+        if (string.IsNullOrWhiteSpace(searchString)) return true;
+        if(beneficiaire.designation_beneficiaire.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+        {
+            return false;
+        }
+    }
+
+    private List<Beneficiaire> GetAll()
+    {
+        beneficiaires = beneficiaireService.GetAll();
+        return beneficiaires;
+    }
+
+    private void Add()
+    {
+        if(beneficiaire.Id_beneficiaire==0)
+        {
+            var saved = beneficiaireService.Add(beneficiaire);
+            Snackbar.Add("Beneficiaire Ajouté", Severity.Success);
+
+        }else
+        {
+            beneficiaireService.Update(beneficiaire);
+            Snackbar.Add("Beneficiaire mis à jour", Severity.Success);
+        }
+        beneficiaire = new Beneficiaire();
+        GetAll();
+    }
+
+    private void Update(Beneficiaire record)
+    {
+        beneficiaire = record;
+        StateHasChanged();
+    }
+
+    private async Task Delete(Beneficiaire record)
+    {
+        beneficiaireService.Delete(record);
+        GetAll();
+    }
+
+}

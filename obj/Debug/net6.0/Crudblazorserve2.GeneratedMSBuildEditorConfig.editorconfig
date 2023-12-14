@@ -1,0 +1,71 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Crudblazorserve2
+build_property.RootNamespace = Crudblazorserve2
+build_property.ProjectDir = C:\Users\user\Documents\projetaspenetcoremvc\Crudblazorserve2\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\user\Documents\projetaspenetcoremvc\Crudblazorserve2
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/user/Documents/projetaspenetcoremvc/Crudblazorserve2/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Documents/projetaspenetcoremvc/Crudblazorserve2/Pages/BeneficiairePage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmVuZWZpY2lhaXJlUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Documents/projetaspenetcoremvc/Crudblazorserve2/Pages/CautionPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F1dGlvblBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Documents/projetaspenetcoremvc/Crudblazorserve2/Pages/DonneurordrePage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRG9ubmV1cm9yZHJlUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Documents/projetaspenetcoremvc/Crudblazorserve2/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Documents/projetaspenetcoremvc/Crudblazorserve2/Pages/Typearticle.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVHlwZWFydGljbGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Documents/projetaspenetcoremvc/Crudblazorserve2/Pages/ValidationcautionPages.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmFsaWRhdGlvbmNhdXRpb25QYWdlcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Documents/projetaspenetcoremvc/Crudblazorserve2/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Documents/projetaspenetcoremvc/Crudblazorserve2/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-i9ektx5qjg
+
+[C:/Users/user/Documents/projetaspenetcoremvc/Crudblazorserve2/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-6hqbtxeeas
+
+[C:/Users/user/Documents/projetaspenetcoremvc/Crudblazorserve2/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Documents/projetaspenetcoremvc/Crudblazorserve2/Pages/_Host.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/user/Documents/projetaspenetcoremvc/Crudblazorserve2/Pages/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0xheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

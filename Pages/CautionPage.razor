@@ -1,0 +1,324 @@
+﻿@page "/caution"
+
+@using CautionSououmission.Shared;
+@using System
+@using System.Linq
+@using MudBlazor
+@using System.Data
+@using MoreLinq
+@using Newtonsoft.Json
+@inject ISnackbar Snackbar
+
+<MudCard Elevation="25">
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6">Caution</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <EditForm OnInvalidSubmit="Add" Model="@caution">
+            <MudGrid>
+               
+                      @*   <MudItem xs="12" sm="12" md="12">
+                            <MudDatePicker @bind-Value="caution.date_caution" Label="Date caution"></MudDatePicker>
+                        </MudItem> *@
+                        <div class="container">
+                        <div class="row">
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.numcaution" Label="Numero caution" Variant="Variant.Text"></MudTextField>
+                            </MudItem>
+                        </div>
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.numappeloffre" Label="Numero appel offre" Variant="Variant.Text"></MudTextField>
+                            </MudItem>
+                        </div>
+                         </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.travaux" Label="Designation travaux" Variant="Variant.Text"></MudTextField>
+                            </MudItem>
+                        </div>
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.article" Label="Article" Variant="Variant.Text"></MudTextField>
+                            </MudItem>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.montant" Label="Montant caution" Variant="Variant.Text"></MudTextField>
+                            </MudItem>
+                        </div>
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.montantlettre" Label="Montant lettre" Variant="Variant.Text"></MudTextField>
+                            </MudItem>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.devise" Label="Devise" Variant="Variant.Text"></MudTextField>
+                            </MudItem>
+                        </div>
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.projetbeneficiaire" Label="Projet" Variant="Variant.Text"></MudTextField>
+                            </MudItem>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.libbeneficiaire" Label="Beneficiaire" Variant="Variant.Text"></MudTextField>
+                            </MudItem>
+                        </div>
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.codepaysbene" Label="code pays beneficiaire" Variant="Variant.Text"></MudTextField>
+
+                            </MudItem>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.tel1bene" Label="Telephone(1) Beneficiaire" Variant="Variant.Text"></MudTextField>
+                            </MudItem>
+                        </div>
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.tel2bene" Label="Telephone(2) Beneficiare" Variant="Variant.Text"></MudTextField>
+                            </MudItem>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.addressbene" Label="Adresse Beneficiaire" Variant="Variant.Text"></MudTextField>
+                            </MudItem>
+                        </div>
+                        <div class="col-6">
+
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.emailbene" Label="Email Beneficiaire" Variant="Variant.Text"></MudTextField>
+                            </MudItem>
+                        </div>
+                    </div>
+                      <div class="row">
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.bpbene" Label="Boite postale beneficiaire" Variant="Variant.Text"></MudTextField>
+
+                            </MudItem>
+
+                        </div>
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.raisonsocialecli" Label="Client" Variant="Variant.Text"></MudTextField>
+                            </MudItem>
+                        </div>
+                    </div>
+                      <div class="row">
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.numrccli" Label="Numero RC client" Variant="Variant.Text"></MudTextField>
+                            </MudItem>
+                        </div>
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.bpcli" Label="Boite postale client" Variant="Variant.Text"></MudTextField>
+                            </MudItem>
+                        </div>
+                    </div>
+                      <div class="row">
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.addresscli" Label="Adresse client" Variant="Variant.Text"></MudTextField>
+                            </MudItem>
+                        </div>
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.codepayscli" Label="Code pays client" Variant="Variant.Text"></MudTextField>
+
+                            </MudItem>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.telephone1cli" Label="Telephone (1) Client" Variant="Variant.Text"></MudTextField>
+                            </MudItem>
+                        </div>
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.telephone2cli" Label="Telephone (2) Client" Variant="Variant.Text"></MudTextField>
+                            </MudItem>
+                        </div>
+                    </div>
+
+                     <div class="row">
+                        <div class="col-6">
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudTextField @bind-Value="caution.emailcli" Label="Email Clientt" Variant="Variant.Text"></MudTextField>
+
+                            </MudItem>
+                        </div>
+                        <div class="col-6">
+                           
+                        </div>
+                    </div>
+
+               </div>
+ 
+            </MudGrid>
+            <br /><br />
+            <MudButton Color="Color.Info" Variant="Variant.Filled" OnClick="Add">Enregistrer</MudButton>
+        </EditForm>
+    </MudCardContent>
+</MudCard>
+
+<br />
+<br />
+<MudTable Elevation="5" Items="GetAll()" Filter="new Func<Caution, bool>(Rechercher)" @bind-caution="caution">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Liste de caution</MudText>
+        <MudSpacer></MudSpacer>
+        <MudTextField @bind-Value="searchString" Placeholder="Recherche caution"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+ @*        <MudTh>Date</MudTh> *@
+        <MudTh>N appel offre</MudTh>
+        <MudTh>N caution</MudTh>
+        <MudTh>Montant</MudTh>
+        <MudTh>Client</MudTh>
+        <MudTh>Beneficiaire</MudTh>
+        <MudTh>Projet</MudTh>
+        <MudTh>Article</MudTh>
+        <MudTh>Action</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+  @*       <MudTd DataLabel="Date caution">@context.date_caution</MudTd> *@
+            <MudTd DataLabel="Num Appel Offre">@context.numappeloffre</MudTd>
+            <MudTd DataLabel="Num Caution">@context.numcaution</MudTd>
+            <MudTd DataLabel="Montant">@context.montant</MudTd>
+            <MudTd DataLabel="Client">@context.raisonsocialecli</MudTd>
+            <MudTd DataLabel="Beneficiaire">@context.libbeneficiaire</MudTd>
+            <MudTd DataLabel="Projet">@context.projetbeneficiaire</MudTd>
+            <MudTd DataLabel="Article">@context.article</MudTd>
+            <MudTd DataLabel="Action">
+                <MudFab OnClick="@(()=>Update(context))" Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" IconSize="Size.Small"></MudFab>
+                <MudFab OnClick="@(()=>Delete(context))" Color="Color.Secondary" Icon="@Icons.Material.Filled.Delete" Size="Size.Small" IconSize="Size.Small"></MudFab>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+    </MudTable>
+
+
+    @code {
+
+    private string searchString = "";
+    private Caution caution = new Caution();
+
+    private List<Caution> cautions = new List<Caution>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        cautions = cautionService.GetAll();
+    }
+
+    public bool Rechercher(Caution caution)
+    {
+        if (string.IsNullOrWhiteSpace(searchString)) return true;
+        if (caution.numcaution.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+        || (caution.numappeloffre.Contains(searchString, StringComparison.OrdinalIgnoreCase)))
+        {
+            return true;
+        }
+        {
+            return false;
+        }
+    }
+
+    private List<Caution> GetAll()
+    {
+        cautions = cautionService.GetAll();
+        return cautions;
+    }
+
+    private void Etatreport()
+    {
+
+        if (caution.idcaution == 0)
+        {
+            var It = new Caution();
+            It = caution;
+            var Items = Enumerable.Range(1, 1).Select(s => It);
+            var table1 = Items.ToDataTable();
+            table1.TableName = "CAUTIONG";
+            var dataset = new DataSet();
+            dataset.Tables.Add(table1);
+            var samplejson = JsonConvert.SerializeObject(dataset);
+            File.WriteAllText(@"C:\Users\user\Downloads\sampleData\file.json", samplejson);
+
+            FastReport.Report etat = new();
+            etat.Load(@"C:\Users\user\Downloads\sampleData\Garantisoumission.frx");
+            etat.RegisterData(dataset, true);
+            FastReport.DataBand db = (FastReport.DataBand)etat.FindObject("data1");
+            db.DataSource = etat.GetDataSource("CAUTIONG");
+            if (etat.Prepare())
+            {
+                using var ms = File.OpenWrite(@"C:\Users\user\Downloads\cautionSoumission_"+caution.numcaution+".pdf");
+                FastReport.Export.PdfSimple.PDFSimpleExport export = new FastReport.Export.PdfSimple.PDFSimpleExport();
+                etat.Report.Export(export, ms);
+
+            }
+            else
+            {
+
+            }
+        }
+    }
+    
+
+    private void Add()
+    {
+        if (caution.idcaution == 0)
+        {
+            Etatreport();
+            var saved = cautionService.Add(caution);
+            Snackbar.Add("Caution Ajouté", Severity.Success);
+
+        }
+        else
+        {
+            Etatreport();
+            cautionService.Update(caution);
+            Snackbar.Add("Caution mis à jour", Severity.Success);
+        }
+        caution = new Caution();
+        GetAll();
+    }
+
+    private void Update(Caution record)
+    {
+        Etatreport();
+        caution = record;
+        StateHasChanged();
+    }
+
+    private async Task Delete(Caution record)
+    {
+        cautionService.Delete(record);
+        GetAll();
+    }
+
+
+}

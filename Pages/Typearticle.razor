@@ -1,0 +1,107 @@
+﻿@page "/typearticle"
+
+@using CautionSououmission.Shared
+@using System
+@using System.Linq
+@using MudBlazor
+@inject ISnackbar Snackbar
+
+
+<MudCard Elevation="25">
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6">Article</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <EditForm OnInvalidSubmit="Add" Model="@typearticle">
+            <MudTextField @bind-Value="typearticle.libelle_article" Label="Numero Article" Variant="Variant.Text"></MudTextField>
+            <br /><br />
+            <MudButton Color="Color.Info" Variant="Variant.Filled" OnClick="Add">Enregistrer</MudButton>
+        </EditForm>
+    </MudCardContent>
+</MudCard>
+
+<br />
+<br />
+<MudTable Elevation="5" Items="GetAll()" Filter="new Func<CautionSououmission.Shared.Typearticle, bool>(Rechercher)" @bind-typearticle="typearticle">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Liste Numero Article</MudText>
+        <MudSpacer></MudSpacer>
+        <MudTextField @bind-Value="searchString" Placeholder="Recherche Article"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Numero article</MudTh>
+        <MudTh>Action</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+            <MudTd DataLabel="Article">@context.libelle_article</MudTd>
+            <MudTd DataLabel="Action">
+                <MudFab OnClick="@(()=>Update(context))" Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" IconSize="Size.Small"></MudFab>
+                <MudFab OnClick="@(()=>Delete(context))" Color="Color.Secondary" Icon="@Icons.Material.Filled.Delete" Size="Size.Small" IconSize="Size.Small"></MudFab>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+    </MudTable>
+
+@code {
+    private string searchString = "";
+    private CautionSououmission.Shared.Typearticle typearticle = new CautionSououmission.Shared.Typearticle();
+
+    private List<CautionSououmission.Shared.Typearticle> typearticles = new List<CautionSououmission.Shared.Typearticle>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        typearticles = typearticleService.GetAll();
+    }
+
+    public bool Rechercher(CautionSououmission.Shared.Typearticle typearticle)
+    {
+        if (string.IsNullOrWhiteSpace(searchString)) return true;
+        if (typearticle.libelle_article.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+        {
+            return false;
+        }
+    }
+
+    private List<CautionSououmission.Shared.Typearticle> GetAll()
+    {
+        typearticles = typearticleService.GetAll();
+        return typearticles;
+    }
+
+    private void Add()
+    {
+        if (typearticle.id_article == 0)
+        {
+            var saved = typearticleService.Add(typearticle);
+            Snackbar.Add("Article Ajouté", Severity.Success);
+
+        }
+        else
+        {
+            typearticleService.Update(typearticle);
+            Snackbar.Add("Article mis à jour", Severity.Success);
+        }
+        typearticle = new CautionSououmission.Shared.Typearticle();
+        GetAll();
+    }
+
+    private void Update(CautionSououmission.Shared.Typearticle record)
+    {
+        typearticle = record;
+        StateHasChanged();
+    }
+
+    private async Task Delete(CautionSououmission.Shared.Typearticle record)
+    {
+        typearticleService.Delete(record);
+        GetAll();
+    }
+
+}

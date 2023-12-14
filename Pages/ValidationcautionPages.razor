@@ -1,0 +1,119 @@
+﻿@page "/validationcaution"
+@using CautionSououmission.Shared;
+@using System
+@using System.Linq
+@using FastReport
+@using MudBlazor
+@using System.Data
+@using MoreLinq
+@using Newtonsoft.Json
+@inject ISnackbar Snackbar
+
+<MudTable Elevation="5" Items="GetAll()" Filter="new Func<Caution, bool>(Rechercher)" @bind-caution="caution">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Liste de caution</MudText>
+        <MudSpacer></MudSpacer>
+        <MudTextField @bind-Value="searchString" Placeholder="Recherche caution"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        @*        <MudTh>Date</MudTh> *@
+        <MudTh>N appel offre</MudTh>
+        <MudTh>N caution</MudTh>
+        <MudTh>Montant</MudTh>
+        <MudTh>Client</MudTh>
+        <MudTh>Beneficiaire</MudTh>
+        <MudTh>Projet</MudTh>
+        <MudTh>Article</MudTh>
+        <MudTh>Action</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        @*       <MudTd DataLabel="Date caution">@context.date_caution</MudTd> *@
+        <MudTd DataLabel="Num Appel Offre">@context.numappeloffre</MudTd>
+            <MudTd DataLabel="Num Caution">@context.numcaution</MudTd>
+            <MudTd DataLabel="Montant">@context.montant</MudTd>
+            <MudTd DataLabel="Client">@context.raisonsocialecli</MudTd>
+            <MudTd DataLabel="Beneficiaire">@context.libbeneficiaire</MudTd>
+            <MudTd DataLabel="Projet">@context.projetbeneficiaire</MudTd>
+            <MudTd DataLabel="Article">@context.article</MudTd>
+            <MudTd DataLabel="Action">
+                <MudFab OnClick="@(()=>Etatreport(context))" Color="Color.Success" Icon="@Icons.Material.Filled.Download" Size="Size.Small" IconSize="Size.Small"></MudFab>
+              
+                 <MudFab  Color="Color.Primary" Icon="@Icons.Material.Filled.UploadFile" Size="Size.Small" IconSize="Size.Small"></MudFab>
+           </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+    </MudTable>
+
+
+    @code {
+
+
+
+    private string searchString = "";
+    private Caution caution = new Caution();
+
+    private List<Caution> cautions = new List<Caution>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        cautions = cautionService.GetAll();
+    }
+
+    public bool Rechercher(Caution caution)
+    {
+        if (string.IsNullOrWhiteSpace(searchString)) return true;
+        if (caution.numcaution.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+        || (caution.numappeloffre.Contains(searchString, StringComparison.OrdinalIgnoreCase)))
+        {
+            return true;
+        }
+        {
+            return false;
+        }
+    }
+
+    private List<Caution> GetAll()
+    {
+        cautions = cautionService.GetAll();
+        return cautions;
+    }
+
+    private void Etatreport(Caution record)
+    {
+        
+        if (record.idcaution != 0)
+        {
+            var It = new Caution();
+            It = record;
+            var Items = Enumerable.Range(1, 1).Select(s => It);
+            var table1 = Items.ToDataTable();
+            table1.TableName = "CAUTIONG";
+            var dataset = new DataSet();
+            dataset.Tables.Add(table1);
+            var samplejson = JsonConvert.SerializeObject(dataset);
+            File.WriteAllText(@"C:\Users\user\Downloads\sampleData\file.json", samplejson);
+
+            FastReport.Report etat = new();
+            etat.Load(@"C:\Users\user\Downloads\sampleData\Garantisoumission.frx");
+            etat.RegisterData(dataset, true);
+            FastReport.DataBand db = (FastReport.DataBand)etat.FindObject("data1");
+            db.DataSource = etat.GetDataSource("CAUTIONG");
+            if (etat.Prepare())
+            {
+                using var ms = File.OpenWrite(@"C:\Users\user\Downloads\cautionSoumission_" + record.numcaution + ".pdf");
+                FastReport.Export.PdfSimple.PDFSimpleExport export = new FastReport.Export.PdfSimple.PDFSimpleExport();
+                etat.Report.Export(export, ms);
+                Snackbar.Add("Caution télécharger", Severity.Success);
+
+            }
+            else
+            {
+
+            }
+        }
+    }
+    
+
+}
